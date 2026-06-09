@@ -1,0 +1,1082 @@
+/* ==========================================================================
+   SarachoMaps - Premium CSS Stylesheet (Theme: Slate Tech & Glassmorphism)
+   ========================================================================== */
+
+/* Variables de Diseño y Paleta de Colores (UAJMS Theme Base - Rediseñado) */
+:root {
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Colores oficiales de la UAJMS (Exactas) */
+  --uajms-blue: #27348b;
+  --uajms-red: #e30613;
+  --uajms-blue-light: #5263c9;
+  
+  /* Tema Oscuro (Defecto) */
+  --bg-main: hsl(222, 25%, 10%);
+  --bg-sidebar: rgba(15, 23, 42, 0.75); /* Translúcido para Glassmorphism */
+  --bg-card: hsla(222, 20%, 18%, 0.7);
+  --bg-card-hover: hsla(222, 20%, 25%, 0.8);
+  
+  --accent-color: var(--uajms-red);
+  --accent-color-hover: #ff2a38;
+  --accent-color-rgba: 227, 6, 19; /* rgb(227, 6, 19) para sombras/pulsos */
+  --accent-blue: var(--uajms-blue-light);
+  
+  --text-primary: hsl(0, 0%, 98%);
+  --text-secondary: hsl(215, 15%, 70%);
+  --text-muted: hsl(215, 10%, 50%);
+  
+  --border-color: rgba(255, 255, 255, 0.08);
+  --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --glass-blur: blur(14px);
+  --transition-speed: 0.35s;
+}
+
+/* Tema Claro */
+[data-theme="light"] {
+  --bg-main: hsl(210, 20%, 96%);
+  --bg-sidebar: rgba(255, 255, 255, 0.75); /* Translúcido para Glassmorphism */
+  --bg-card: hsla(210, 15%, 90%, 0.7);
+  --bg-card-hover: hsla(210, 15%, 85%, 0.8);
+  
+  --accent-color: var(--uajms-blue);
+  --accent-color-hover: #192361;
+  --accent-color-rgba: 39, 52, 139; /* rgb(39, 52, 139) para sombras/pulsos */
+  --accent-blue: var(--uajms-red);
+  
+  --text-primary: hsl(222, 25%, 12%);
+  --text-secondary: hsl(215, 15%, 35%);
+  --text-muted: hsl(215, 10%, 55%);
+  
+  --border-color: rgba(0, 0, 0, 0.08);
+  --shadow-premium: 0 8px 24px 0 rgba(0, 0, 0, 0.08);
+}
+
+/* Reset y Estilos Generales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+/* Scrollbars Modernos */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 10px;
+}
+
+body, html {
+  font-family: var(--font-body);
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Estructura Principal */
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+/* ==========================================================================
+   SIDEBAR (Panel Lateral) - Estilo Glassmorphism
+   ========================================================================== */
+.sidebar {
+  width: 320px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--bg-sidebar);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow-premium);
+  transition: transform var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-100%); /* Oculto por defecto en móvil */
+}
+
+/* Estado Abierto (Tanto en escritorio como móvil) */
+.sidebar.open {
+  transform: translateX(0);
+}
+
+/* Cabecera del Sidebar con el Escudo UAJMS */
+.sidebar-header {
+  padding: 24px 20px 24px 76px; /* Dejar 76px a la izquierda para el botón de menú hamburguesa flotante */
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shield-container {
+  width: 58px;
+  height: 58px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 2px solid var(--uajms-blue);
+}
+
+.uajms-shield {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.sidebar-header .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text-primary);
+}
+.sidebar-header .logo i {
+  color: var(--accent-color);
+  filter: drop-shadow(0 0 8px rgba(var(--accent-color-rgba), 0.4));
+}
+.sidebar-header .logo span span {
+  color: var(--accent-color);
+}
+.sidebar-header .subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Buscador */
+.search-container {
+  padding: 16px 20px;
+  position: relative;
+}
+.search-icon {
+  position: absolute;
+  left: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 14px;
+  pointer-events: none;
+}
+#search-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 12px 10px 36px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+#search-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(26, 219, 184, 0.15);
+}
+
+/* Menú Acordeón (Navegación) */
+.sidebar-nav {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px 0;
+}
+.facultades-list {
+  list-style: none;
+}
+
+/* Item Facultad */
+.facultad-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+.facultad-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
+  transition: background var(--transition-speed);
+}
+.facultad-header:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+.facultad-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.facultad-title-wrapper i.facultad-icon {
+  color: var(--accent-blue);
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+.facultad-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: left;
+  line-height: 1.3;
+}
+.facultad-header .chevron {
+  font-size: 12px;
+  color: var(--text-muted);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estado Activo Acordeón */
+.facultad-item.active .facultad-header {
+  background: rgba(255, 255, 255, 0.03);
+}
+.facultad-item.active .facultad-header .chevron {
+  transform: rotate(180deg);
+  color: var(--accent-color);
+}
+.facultad-item.active .facultad-title-wrapper i.facultad-icon {
+  color: var(--accent-color);
+}
+
+/* Lista de Bloques */
+.bloques-list {
+  list-style: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(0, 0, 0, 0.15);
+}
+.facultad-item.active .bloques-list {
+  max-height: 500px; /* Suficiente para listar varios bloques */
+}
+
+.bloque-item {
+  padding: 12px 20px 12px 48px;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  position: relative;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.bloque-item::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: all 0.25s ease;
+}
+.bloque-item:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.02);
+}
+.bloque-item:hover::before {
+  background: var(--accent-blue);
+  box-shadow: 0 0 6px var(--accent-blue);
+}
+
+/* Bloque Seleccionado */
+.bloque-item.active {
+  color: var(--accent-color);
+  background: rgba(26, 219, 184, 0.05);
+  font-weight: 600;
+}
+.bloque-item.active::before {
+  background: var(--accent-color);
+  box-shadow: 0 0 8px var(--accent-color);
+  width: 8px;
+  height: 8px;
+}
+
+/* Footer de Sidebar */
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+}
+.sidebar-footer i {
+  color: #ff4a5a;
+  animation: beat 1.2s infinite alternate;
+}
+
+@keyframes beat {
+  to { transform: scale(1.1); }
+}
+
+/* ==========================================================================
+   VIEWER CONTAINER (Área Principal)
+   ========================================================================== */
+.viewer-container {
+  flex-grow: 1;
+  height: 100%;
+  position: relative;
+  background-color: var(--bg-main);
+}
+
+/* Transiciones entre Vistas (Fading) */
+.active-view {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 5;
+  transition: opacity 0.5s ease-in-out;
+}
+.inactive-view {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+#map-view, #pano-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.full-size-map, .full-size-pano {
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================================================
+   LEAFLET CUSTOMIZATIONS (Estilo Oscuro Premium)
+   ========================================================================== */
+/* Reemplazo visual de Leaflet para encajar con el tema oscuro de la App */
+.leaflet-container {
+  background: var(--bg-main) !important;
+}
+.leaflet-bar {
+  border: 1px solid var(--border-color) !important;
+  box-shadow: var(--shadow-premium) !important;
+}
+.leaflet-bar a {
+  background-color: var(--bg-sidebar) !important;
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  transition: background-color 0.2s;
+}
+.leaflet-bar a:hover {
+  background-color: var(--bg-card-hover) !important;
+  color: var(--accent-color) !important;
+}
+
+/* Popups Modernos */
+.leaflet-popup-content-wrapper {
+  background: var(--bg-sidebar) !important;
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary) !important;
+  border-radius: 12px !important;
+  padding: 6px;
+  box-shadow: var(--shadow-premium) !important;
+}
+.leaflet-popup-tip {
+  background: hsla(222, 25%, 14%, 0.95) !important;
+  border: 1px solid var(--border-color);
+}
+.leaflet-popup-content {
+  margin: 12px !important;
+  font-family: var(--font-body);
+}
+
+/* Estilos internos del popup del marcador */
+.map-popup-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+}
+.map-popup-card p {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.map-popup-card .btn-popup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--accent-color);
+  color: var(--bg-main);
+  font-weight: 700;
+  font-size: 12px;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  width: 100%;
+  text-decoration: none;
+}
+.map-popup-card .btn-popup:hover {
+  background: var(--accent-color-hover);
+  box-shadow: 0 0 12px rgba(var(--accent-color-rgba), 0.4);
+}
+
+/* Animación de pulso para pines del mapa */
+.custom-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50% 50% 50% 0;
+  background: var(--accent-color);
+  transform: rotate(-45deg);
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+.custom-pin i {
+  transform: rotate(45deg);
+  color: var(--bg-main);
+  font-size: 14px;
+}
+.custom-pin::after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(var(--accent-color-rgba), 0.35);
+  position: absolute;
+  z-index: -1;
+  animation: pulse 1.8s infinite ease-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* ==========================================================================
+   ELEMENTOS DE VISTA STREET VIEW 360 (Pannellum Overlay)
+   ========================================================================== */
+/* Cabecera flotante en 360 */
+.pano-overlay-header {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: auto; /* Para que solo ocupe lo que necesita */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(15, 23, 42, 0.85); /* Fondo oscuro translúcido */
+  padding: 8px 15px;
+  border-radius: 12px; /* Bordes redondeados modernos */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Ocultar header condicional (nodos tipo camino o _detras) */
+.pano-overlay-header.header-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: var(--text-primary);
+  text-decoration: none;
+}
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--text-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.pano-title-container {
+  flex-grow: 1;
+}
+.pano-title-container h2 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+.pano-title-container p {
+  font-size: 12px;
+  color: var(--accent-color);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* Minimapa Flotante en 360 */
+.pano-minimap-container {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10;
+  width: 240px;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-premium);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.minimap-header {
+  padding: 10px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 12px;
+  user-select: none;
+}
+.minimap-header i {
+  color: var(--accent-color);
+}
+.minimap-header button {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 11px;
+  padding: 4px;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.minimap-header button:hover {
+  color: var(--text-primary);
+}
+
+.pano-minimap-body {
+  width: 100%;
+  height: 180px;
+  background: var(--bg-main);
+  transition: height 0.3s;
+}
+
+/* Minimapa Colapsado */
+.pano-minimap-container.collapsed {
+  width: 56px;
+}
+.pano-minimap-container.collapsed .pano-minimap-body {
+  height: 0px;
+  border-top: none;
+}
+.pano-minimap-container.collapsed .minimap-header button i {
+  transform: rotate(180deg);
+}
+
+/* Encabezado Compacto del Minimapa (solo botón toggle) */
+.minimap-header-compact {
+  padding: 6px 10px;
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   HUD DE NAVEGACIÓN ESTÁTICO (Reemplaza hotSpots de Pannellum)
+   ========================================================================== */
+/* Ocultar controles nativos de Pannellum (zoom, fullscreen) */
+.pnlm-controls-container {
+  display: none !important;
+}
+
+/* Contenedor del HUD - Zona inferior central */
+.nav-hud-container {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  max-width: 90vw;
+  pointer-events: auto;
+}
+
+/* Botón individual del HUD */
+.hud-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px; /* Pill shape */
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.hud-nav-btn i {
+  font-size: 14px;
+  color: var(--accent-color);
+  transition: color 0.2s;
+}
+
+.hud-nav-btn:hover {
+  background: rgba(var(--accent-color-rgba), 0.85);
+  border-color: rgba(var(--accent-color-rgba), 0.6);
+  color: #fff;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(var(--accent-color-rgba), 0.45);
+}
+
+.hud-nav-btn:hover i {
+  color: #fff;
+}
+
+.hud-nav-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* ==========================================================================
+   BOTONES E INTERFAZ MÓVIL (RESPONSIVE)
+   ========================================================================== */
+/* Botón Hamburguesa Global (Flotante) */
+.menu-toggle-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-sidebar);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: var(--shadow-premium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1005; /* Se sobrepone al sidebar overlay */
+  transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+}
+.menu-toggle-btn:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: scale(1.08);
+}
+
+/* Overlay oscuro para pantallas móviles al abrir el sidebar */
+#sidebar-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  transition: opacity var(--transition-speed);
+}
+#sidebar-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   MEDIA QUERIES - DISEÑO MOBILE-FIRST
+   ========================================================================== */
+@media (max-width: 768px) {
+  /* Mostrar botón hamburguesa en móvil */
+  .menu-toggle-btn {
+    top: 16px;
+    left: 16px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  /* Sidebar Oculto por Defecto en Móvil */
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    z-index: 1000;
+    width: 280px;
+  }
+  
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  
+  /* Reducir padding de la cabecera en móvil */
+  .sidebar-header {
+    padding: 16px 16px 16px 68px;
+  }
+  
+  /* Ajustar área de visualización */
+  .app-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Ajustar Overlays de Pannellum */
+  .pano-overlay-header {
+    top: 16px;
+    left: 16px;
+    right: 80px; /* Dejar espacio para controles flotantes */
+    padding: 10px 14px;
+    gap: 12px;
+  }
+  .pano-overlay-header .btn span {
+    display: none; /* Ocultar texto "Volver al Mapa" para ahorrar espacio */
+  }
+  .pano-overlay-header .btn {
+    padding: 10px 12px;
+  }
+  .pano-title-container h2 {
+    font-size: 15px;
+  }
+  .pano-title-container p {
+    font-size: 11px;
+  }
+
+  /* Mover el minimapa flotante a una posición más cómoda en móvil */
+  .pano-minimap-container {
+    bottom: 16px;
+    right: 16px;
+    width: 160px;
+  }
+  .pano-minimap-container.collapsed {
+    width: 56px;
+  }
+  .pano-minimap-body {
+    height: 120px;
+  }
+
+  /* HUD de Navegación en Móvil */
+  .nav-hud-container {
+    bottom: 16px;
+    gap: 8px;
+    max-width: 95vw;
+  }
+  .hud-nav-btn {
+    padding: 9px 14px;
+    font-size: 12px;
+  }
+  .hud-nav-btn span {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Estilos para los Marcadores del Minimapa */
+.mini-pin {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  border: 2px solid #fff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.mini-pin:hover {
+  transform: scale(1.3);
+  background: var(--accent-color);
+  box-shadow: 0 0 8px var(--accent-color);
+}
+
+.mini-pin.active {
+  background: var(--accent-color);
+  border-color: #fff;
+  transform: scale(1.4);
+  box-shadow: 0 0 10px var(--accent-color), 0 0 4px #fff;
+  animation: miniPulse 1.5s infinite alternate;
+}
+
+@keyframes miniPulse {
+  from { transform: scale(1.2); box-shadow: 0 0 6px var(--accent-color); }
+  to { transform: scale(1.5); box-shadow: 0 0 14px var(--accent-color); }
+}
+
+/* Tooltip personalizado del minimapa */
+.minimap-tooltip {
+  background: var(--bg-sidebar) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px !important;
+  font-family: var(--font-body) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  box-shadow: var(--shadow-premium) !important;
+  padding: 4px 8px !important;
+}
+
+/* Estilos para Controles Flotantes Globales */
+.global-floating-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1010; /* Por encima de todo en la visualización */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.global-floating-controls .floating-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-sidebar);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: var(--shadow-premium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.global-floating-controls .floating-btn:hover {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+  transform: scale(1.1);
+}
+
+.global-floating-controls .floating-btn.active {
+  background: var(--accent-color);
+  color: #fff;
+  border-color: #fff;
+  animation: floatPulse 1.5s infinite alternate;
+}
+
+@keyframes floatPulse {
+  from { box-shadow: 0 0 6px var(--accent-color); }
+  to { box-shadow: 0 0 16px var(--accent-color), 0 0 4px #fff; }
+}
+
+/* Marcador del Usuario en Tiempo Real (Punto Azul Parpadeante) */
+.user-location-pin {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #007aff; /* Azul de localización */
+  border: 2px solid #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+  position: relative;
+  cursor: pointer;
+}
+
+.user-location-pin::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border-radius: 50%;
+  background: rgba(0, 122, 255, 0.35);
+  z-index: -1;
+  animation: userPulse 1.8s infinite ease-out;
+}
+
+@keyframes userPulse {
+  0% { transform: scale(0.6); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Ajustes de Popups de Leaflet para soportar temas */
+.leaflet-popup-content-wrapper {
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* Utilidades */
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   PUNTOS CELESTES DEL RECORRIDO (Street View Dots)
+   ========================================================================== */
+.streetview-dot-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.streetview-dot {
+  width: 14px;
+  height: 14px;
+  background-color: rgba(0, 122, 255, 0.6); /* Celeste translúcido */
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0,0,0,0.4);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.streetview-dot:hover {
+  transform: scale(1.5);
+  background-color: rgba(0, 122, 255, 1);
+  border-color: #fff;
+  box-shadow: 0 0 8px rgba(0, 122, 255, 0.8);
+}
+
+/* ==========================================================================
+   FLECHAS DE NAVEGACIÓN EN EL SUELO (Street View Pro)
+   ========================================================================== */
+.custom-floor-hotspot {
+  width: 60px; /* Un poco más grande para compensar la inclinación */
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.122);
+  border: 3px solid rgba(255, 255, 255, 0.503);
+  border-radius: 50%;
+  
+  /* 80 grados lo deja prácticamente pegado al asfalto */
+  transform: rotateX(80deg); 
+  cursor: pointer;
+  transition: background-color 0.1s ease; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Exterminar cualquier texto fantasma que intente meter Pannellum */
+  color: transparent !important;
+  font-size: 0 !important;
+}
+
+.custom-floor-hotspot:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: rotateX(80deg) scale(1.1);
+  border-color: #fff;
+}
+
+/* La flecha tipo Google Maps (Chevron) dibujada con CSS */
+.custom-floor-hotspot::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-top: 5px solid rgba(0, 0, 0, 0.7);
+  border-right: 5px solid rgba(0, 0, 0, 0.7);
+  /* Rotamos un cuadrado sin dos bordes para formar la flecha */
+  transform: rotate(-45deg) translate(-2px, 2px);
+  display: block;
+}
+
+.custom-floor-hotspot:hover .hotspot-tooltip {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   TEMA CLARO PARA EL HUD 360 (Header y Botones)
+   ========================================================================== */
+[data-theme="light"] .pano-overlay-header {
+  background: rgba(255, 255, 255, 0.9); /* Fondo blanco translúcido */
+  color: #1e293b; /* Texto oscuro */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+[data-theme="light"] #exit-pano-btn {
+  background: #f1f5f9; /* Gris muy clarito */
+  color: #1e293b; /* Texto oscuro */
+  border: 1px solid #cbd5e1;
+}
+
+[data-theme="light"] #exit-pano-btn:hover {
+  background: #e2e8f0; /* Gris un poco más oscuro al pasar el mouse */
+}
+
+/* De paso, arreglamos el encabezado del minimapa en 360 para que coincida */
+[data-theme="light"] .minimap-header {
+  background: rgba(255, 255, 255, 0.95);
+  color: #1e293b;
+  border-bottom: 1px solid #e2e8f0;
+}

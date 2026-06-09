@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SarachoMaps - Mapa interactivo 2D y Street View 360 del Campus El Tejar de la Universidad Autónoma Juan Misael Saracho (UAJMS) en Tarija, Bolivia.">
+  
+  <title>SarachoMaps - UAJMS 360</title>
+
+  <!-- Google Fonts: Outfit e Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Leaflet Map CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+  <!-- Pannellum 360 Viewer CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css"/>
+
+  <!-- Estilos Personalizados -->
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- Botón Menú Hamburguesa Global (Flotante Superior Izquierdo) -->
+  <button id="menu-toggle-btn" class="menu-toggle-btn" aria-label="Alternar barra lateral">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+
+  <!-- Overlay para cerrar el menú lateral en móvil al tocar fuera -->
+  <div id="sidebar-overlay" class="hidden"></div>
+
+  <!-- Contenedor Principal: Sidebar + Área de Visualización -->
+  <div class="app-container">
+
+    <!-- Barra Lateral (Sidebar) -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="shield-container">
+          <img src="/escudo.png" alt="Escudo UAJMS" class="uajms-shield">
+        </div>
+        <div class="logo">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <span>Saracho<span>Maps</span></span>
+        </div>
+        <p class="subtitle">Campus "El Tejar" - UAJMS</p>
+      </div>
+
+      <!-- Buscador rápido para mejorar UX -->
+      <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="search-input" placeholder="Buscar bloques o facultades...">
+      </div>
+
+      <!-- Lista Acordeón de Facultades y Bloques -->
+      <nav class="sidebar-nav">
+        <ul id="facultades-list" class="facultades-list">
+          <!-- Se renderiza de forma dinámica desde JavaScript (main.js) -->
+        </ul>
+      </nav>
+
+      <!-- Pie de página del sidebar -->
+      <div class="sidebar-footer">
+        <p>Desarrollado con <i class="fa-solid fa-heart text-danger"></i> para UAJMS</p>
+      </div>
+
+    </aside>
+
+    <!-- Área de Visualización Interactiva (Contenido Principal) -->
+    <main class="viewer-container">
+
+      <!-- Controles Flotantes Globales (Esquina Superior Derecha) -->
+      <div class="global-floating-controls">
+        <!-- Botón para Alternar Tema (Claro/Oscuro) -->
+        <button id="theme-toggle-btn" class="floating-btn" aria-label="Alternar modo de luz/oscuridad">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <!-- Botón para Geolocalización en Tiempo Real -->
+        <button id="locate-user-btn" class="floating-btn" aria-label="Centrar en mi ubicación">
+          <i class="fa-solid fa-crosshairs"></i>
+        </button>
+      </div>
+
+      <!-- VISTA 1: Mapa 2D Leaflet -->
+      <section id="map-view" class="active-view">
+        <div id="map" class="full-size-map"></div>
+      </section>
+
+      <!-- VISTA 2: Street View 360 (Pannellum) -->
+      <section id="pano-view" class="inactive-view">
+        <!-- Visor de Pannellum -->
+        <div id="panorama" class="full-size-pano"></div>
+
+        <!-- Barra de Encabezado Superior en 360 (Glassmorphism Overlay) -->
+        <div class="pano-overlay-header">
+          <button id="exit-pano-btn" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-rotate-left"></i>
+            <span>Volver</span>
+          </button>
+          <div class="pano-title-container">
+            <h2 id="current-block-title">Nombre del Bloque</h2>
+            <p id="current-node-title"><i class="fa-solid fa-eye"></i> Nodo Actual</p>
+          </div>
+        </div>
+
+        <!-- Contenedor del Minimapa Flotante 360 -->
+        <div id="pano-minimap-container" class="pano-minimap-container">
+          <div class="minimap-header minimap-header-compact">
+            <button id="toggle-minimap-btn" aria-label="Minimizar mapa">
+              <i class="fa-solid fa-chevron-down"></i>
+            </button>
+          </div>
+          <div id="pano-minimap" class="pano-minimap-body"></div>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Leaflet Map JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- Pannellum 360 Viewer JS -->
+  <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+  <!-- Lógica de la Aplicación -->
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
