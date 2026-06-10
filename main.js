@@ -460,6 +460,7 @@ function load360Scene(nodeId, targetYaw = null) {
     autoLoad: true,
     yaw: targetYaw !== null && targetYaw !== undefined ? targetYaw : (nodo.yawInicial || 0),
     pitch: nodo.pitchInicial || 0,
+    hfov: 120,
     showControls: false,
     compass: false,
     hotSpots: hotspotsData // ¡Aquí le pasamos nuestras flechas!
