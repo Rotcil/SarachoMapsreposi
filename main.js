@@ -399,7 +399,7 @@ function enterStreetView(nodeId) {
   initPanoMinimap();
 }
 
-function load360Scene(nodeId) {
+function load360Scene(nodeId, targetYaw = null) {
   const nodo = campusData.recorrido360[nodeId];
   if (!nodo) return;
 
@@ -437,22 +437,18 @@ function load360Scene(nodeId) {
   // --- CREAR HOTSPOTS DE SUELO DINÁMICAMENTE ---
   const hotspotsData = (nodo.enlaces || []).map(enlace => {
     return {
-      pitch: enlace.pitch || -25, // -25 los tira hacia el suelo
-      yaw: enlace.yaw || 0,       // Hacia dónde apunta (Norte, Sur, etc.)
+      pitch: enlace.pitch || -25, 
+      yaw: enlace.yaw || 0,       
       type: "custom",
       cssClass: "custom-floor-hotspot",
-      createTooltipArgs: enlace.targetId,
-      createTooltipFunc: function(hotSpotDiv, args) {
-        // 1. Darle la función de clic para cambiar de foto
-        hotSpotDiv.addEventListener('click', () => {
-          change360Node(args);
-        });
+      createTooltipArgs: enlace, // Pasamos el objeto enlace completo
+      createTooltipFunc: function(hotSpotDiv, linkData) {
+        hotSpotDiv.innerHTML = ''; 
         
-        // 2. Crear el texto flotante leyendo el nombre real del destino
-        const tooltip = document.createElement('span');
-        tooltip.className = 'hotspot-tooltip';
-        tooltip.innerText = obtenerNombreDestino(args);
-        hotSpotDiv.appendChild(tooltip);
+        hotSpotDiv.addEventListener('click', () => {
+          // Lanzamos el cambio de nodo mandando el ID y el nuevo ángulo (si existe)
+          change360Node(linkData.targetId, linkData.targetYaw);
+        });
       }
     };
   });
@@ -462,7 +458,7 @@ function load360Scene(nodeId) {
     type: 'equirectangular',
     panorama: nodo.imagen,
     autoLoad: true,
-    yaw: nodo.yawInicial || 0,
+    yaw: targetYaw !== null && targetYaw !== undefined ? targetYaw : (nodo.yawInicial || 0),
     pitch: nodo.pitchInicial || 0,
     showControls: false,
     compass: false,
@@ -488,7 +484,7 @@ function renderNavigationHUD(enlaces) {
     btn.className = 'hud-nav-btn';
     btn.dataset.targetId = enlace.targetId;
 
-    // MAGIA AQUI: Usamos la función auxiliar para los nombres
+    // Usamos la función auxiliar para los nombres
     const text = enlace.text || obtenerNombreDestino(enlace.targetId);
     
     let iconClass = 'fa-solid fa-arrow-up'; 
@@ -518,9 +514,9 @@ function renderNavigationHUD(enlaces) {
   });
 }
 
-function change360Node(targetNodeId) {
+function change360Node(targetNodeId, targetYaw = null) {
   currentNodeId = targetNodeId;
-  load360Scene(targetNodeId);
+  load360Scene(targetNodeId, targetYaw);
   updateMinimapState();
 }
 
